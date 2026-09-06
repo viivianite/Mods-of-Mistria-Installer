@@ -50,8 +50,8 @@ version = 2
 # hook surface. Keep them in step when adding or removing entries; the
 # shipped-catalog test also holds the docs' count sentences to these numbers.
 [counts]
-hooks = 128
-seams = 139
+hooks = 129
+seams = 140
 engine_fixes = 7
 call_rewrites = 1
 
@@ -519,6 +519,11 @@ doc  = "Fires at the end of the player's move speed computation, after the statu
 name = "player.pass_out"
 kind = "event"
 doc  = "Fires in pass_out(), immediately after end_day() - the day rollover is already under way, stamina is zeroed, and the player is flagged invulnerable when handlers run. ctx is { faint }: true for the 2 AM collapse, false when the player went down to a killing blow but the death was averted (ARI.end_of_day_status tells the cases apart: Fainted for the plain collapse, Protected otherwise). Observation only. A normal bed sleep ends the day without pass_out(), and a death that is not averted runs the dying scene instead - see player.died."
+
+[[hook]]
+name = "player.purchase_perk"
+kind = "event"
+doc  = "Fires at the top of Dragonshrine purchase_entry()"
 
 [[hook]]
 name = "player.renown_delta"
@@ -3741,3 +3746,12 @@ replace = '''
 '''
 marker  = "mmapi_fish_chest_table_lookup"
 provides = ["items.chest_opened"]
+
+[[seam]]
+id      = "dragonshrine_purchase_entry"
+file    = "gml/scripts/UI/Anchor/Menus/DragonshrineMenu.gml"
+target  = { fn = "purchase_entry", at = "head" }
+op      = "emit"
+hook    = "player.purchase_perk"
+ctx     = "{ perk: entry.perk }"
+marker  = "mmapi_dragonshrine_purchase_entry"
