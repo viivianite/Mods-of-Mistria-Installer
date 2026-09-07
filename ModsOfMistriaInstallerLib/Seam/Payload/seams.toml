@@ -3552,7 +3552,7 @@ marker  = "mmapi_player_acquire_perk"
 [[seam]]
 id      = "museum_donate_item"
 file    = "gml/scripts/Museum.gml"
-target  = { fn = "donate_item_to_museum", at = "head" }
+target  = { fn = "donate_item_to_museum", at = "after", anchor = '''register_item_to_museum(item_id);''' }
 op      = "emit"
 hook    = "museum.donate_item"
 ctx     = "{ item_id: item_id }"
