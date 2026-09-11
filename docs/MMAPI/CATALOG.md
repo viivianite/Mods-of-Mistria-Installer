@@ -2,7 +2,7 @@
 
 [← MMAPI](MMAPI.md)
 
-Every named hook the seam catalog declares has its own page, as does every seam, engine fix, and call rewrite behind them. The catalog currently declares **128 hooks**, fed by **139 seams**, **7 engine fixes**, and **1 call rewrite**. The authoritative source for all of it is the seam catalog itself, `ModsOfMistriaInstallerLib/Seam/Payload/seams.toml`. See [Seams](SEAMS.md).
+Every named hook the seam catalog declares has its own page, as does every seam, engine fix, and call rewrite behind them. The catalog currently declares **131 hooks**, fed by **142 seams**, **7 engine fixes**, and **1 call rewrite**. The authoritative source for all of it is the seam catalog itself, `ModsOfMistriaInstallerLib/Seam/Payload/seams.toml`. See [Seams](SEAMS.md).
 
 Each hook has exactly one kind, and each kind has one registration directive. A handler registered with the wrong directive never runs and produces only a warning in the MMAPI log. See [Hooks](HOOKS.md).
 
@@ -74,6 +74,7 @@ Each hook has exactly one kind, and each kind has one registration directive. A 
 | [player.pass_out](hooks/player.pass_out.md) | event | Know when the player passes out at the end of the day. |
 | [player.died](hooks/player.died.md) | event | Know when the player dies. |
 | [player.acquire_perk](hooks/player.acquire_perk.md) | event | Know when the player acquires a perk. |
+| [player.purchase_perk](hooks/player.purchase_perk.md) | event | Know when the player purchases a perk through the shrine menus. |
 | [player.skill_leveled](hooks/player.skill_leveled.md) | event | Know the moment the player levels up a skill. |
 | [renown.level_gained](hooks/renown.level_gained.md) | event | Know the moment the player gains a renown level. |
 | [renown.rank_gained](hooks/renown.rank_gained.md) | event | Know the moment the player reaches a new renown rank. |
@@ -202,7 +203,7 @@ The anchored engine edits that make the hooks fire. Mod authors never write seam
 | [object_interact](seams/object_interact.md) | Puts a claim-scoped override in front of every grid-object interaction. |
 | [node_renderer_set_sprite](seams/node_renderer_set_sprite.md) | Filters the sprite every world node renderer is about to wear. |
 | [store_item_added](seams/store_item_added.md) | Announces every shelf tap that puts an item in the shopping basket. |
-| [museum_donate_item](seams/museum_donate_item.md) | Emits the moment an item is donated to the museum. |
+| [museum_donate_item](seams/museum_donate_item.md) | Emits after an item is registered to the museum. |
 
 ### Player, Actors, And Progression
 
@@ -225,7 +226,8 @@ The anchored engine edits that make the hooks fire. Mod authors never write seam
 | [player_heal_vfx](seams/player_heal_vfx.md) | Puts a veto check at the head of `play_heal_vfx()`. |
 | [player_pass_out](seams/player_pass_out.md) | Emits inside `pass_out()`, right after `end_day()`. |
 | [player_died](seams/player_died.md) | Emits on the final death path, right after the dying scene starts. |
-| [player_acquire_perk](seams/player_acquire_perk.md) | Emits at the head of `acquire_perk()`. |
+| [player_acquire_perk](seams/player_acquire_perk.md) | Emits inside `acquire_perk()`, right after the player's perks have been registered. |
+| [player_purchase_perk](seams/player_purchase_perk.md) | Emits at the head of `purchase_perk()`. |
 | [renown_gains](seams/renown_gains.md) | Emits renown level and rank gains inside `set_renown()`, past its gains-only early return. |
 | [player_status_effect_register](seams/player_status_effect_register.md) | Filters every status effect's fields at the top of `register()`. |
 | [player_status_effect_cancel](seams/player_status_effect_cancel.md) | Emits at the head of `StatusEffectManager.cancel()`, before any lookup. |

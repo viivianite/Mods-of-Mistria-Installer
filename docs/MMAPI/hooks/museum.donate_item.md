@@ -6,13 +6,13 @@ Know when an item is donated to the museum.
 
 ## Contract
 
-Fires at the top of `donate_item_to_museum()`, before the item is registered to the collection and before the pending renown entry is pushed. ctx is `{ item_id }`.
+Fires within `donate_item_to_museum()`, after the item is registered to the collection but before the pending renown entry is pushed. ctx is `{ item_id }`.
 
 This hook is observation only. The `DonationResult` the function goes on to compute (progress made, completed set, rewards) is decided after the emit, so a handler sees the donation before the museum knows what it amounts to. It fires once per donated item, from the museum donation menu (and the engine's test suite). Save load and the `ALL_UNLOCKS` new-game path write donations through `register_item_to_museum()` directly and never fire this hook, so handlers see genuine player donations only.
 
 | | |
 | --- | --- |
-| **Fires** | At the top of `donate_item_to_museum()`, before the item is registered or the renown entry is pushed. |
+| **Fires** | At the top of `donate_item_to_museum()`, after the item is registered but before the renown entry is pushed. |
 | **ctx** | `{ item_id }` |
 | **Kind contract** | The callback observes the moment. Its return value is ignored. |
 
@@ -39,7 +39,7 @@ mmapi_on("museum.donate_item", curator_ledger_museum_donate_item);
 
 ## Engine Wiring
 
-- Seam [`museum_donate_item`](../seams/museum_donate_item.md) dispatches from `gml/scripts/Museum.gml`, at the head of `donate_item_to_museum()`.
+- Seam [`museum_donate_item`](../seams/museum_donate_item.md) dispatches from `gml/scripts/Museum.gml`, within `donate_item_to_museum()`.
 
 ## See Also
 
