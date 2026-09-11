@@ -151,6 +151,8 @@ Each hook has exactly one kind, and each kind has one registration directive. A 
 | [ui.backplate_sprite](hooks/ui.backplate_sprite.md) | filter | Swap the backplate sprites behind the mines menu and spell cards. |
 | [ui.preset_popup_layout](hooks/ui.preset_popup_layout.md) | filter | Resize the customization menu's preset popup frames and grid. |
 | [ui.relationship_row_built](hooks/ui.relationship_row_built.md) | event | Add custom nodes to each NPC row in the relationships journal. |
+| [ui.entry_enabled_guard](hooks/ui.entry_enabled_guard) | guard | Block an entry in the shrine menu from showing as enabled. |
+| [ui.entry_acquried_guard](hooks/ui.entry_acquired_guard) | guard | Block an entry in the shrine menu from showing as bought. |
 | [dialogue.play_guard](hooks/dialogue.play_guard.md) | guard | Block a conversation before it starts. |
 | [dialogue.path](hooks/dialogue.path.md) | filter | Change which conversation plays before it starts. |
 | [dialogue.line](hooks/dialogue.line.md) | filter | Reword any dialogue line before the textbox shows it. |
@@ -316,6 +318,8 @@ The anchored engine edits that make the hooks fire. Mod authors never write seam
 | [ui_backplate_sprite_spell_card](seams/ui_backplate_sprite_spell_card.md) | Routes each spell card's backplate sprite through a filter. |
 | [ui_preset_popup_layout](seams/ui_preset_popup_layout.md) | Rebuilds the preset popup's layout constants through a filter each time the popup body is generated. |
 | [ui_relationship_row_built](seams/ui_relationship_row_built.md) | Hands each finished NPC row to mods as the relationships journal builds its list. |
+| [ui_entry_is_enabled](seams/ui_entry_is_enabled.md) | Puts a veto check at the head of `DragonshrineMenu.entry_is_enabled()`. |
+| [ui_entry_is_acquired](seams/ui_entry_is_acquired.md) | Puts a veto check at the head of `DragonshrineMenu.entry_is_acquired()`. |
 | [dialogue_play_guard](seams/dialogue_play_guard.md) | Puts a veto check at the head of `play_conversation()`. |
 | [dialogue_path](seams/dialogue_path.md) | Rebuilds `play_conversation()`'s four arguments through the `dialogue.path` filter. |
 | [dialogue_line](seams/dialogue_line.md) | Filters each localized dialogue line before the textbox shows it. |
