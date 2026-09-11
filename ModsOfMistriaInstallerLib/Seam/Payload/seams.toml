@@ -50,8 +50,8 @@ version = 2
 # hook surface. Keep them in step when adding or removing entries; the
 # shipped-catalog test also holds the docs' count sentences to these numbers.
 [counts]
-hooks = 129
-seams = 140
+hooks = 131
+seams = 142
 engine_fixes = 7
 call_rewrites = 1
 
@@ -702,6 +702,17 @@ doc  = "Fires once per NPC row as the relationships journal page builds its scro
 name = "ui.spawn_tutorial_guard"
 kind = "guard"
 doc  = "Fires at the top of spawn_tutorial(tutorial), before the tutorial is marked seen and before its popup is built. ctx is { tutorial }, the Tutorial enum id. Return false to veto the popup (spawn_tutorial returns undefined, and the tutorial stays unmarked in ARI.tutorials_seen, so the game offers it again on its next trigger); undefined or true allows. The guard sits above the function's own test-suite early return, so it also fires - vacuously - in test-suite runs."
+
+[[hook]]
+name = "ui.entry_enabled_guard"
+kind = "guard"
+doc  = "Fires at the top of entry_is_enabled(entry), in DragonShrineMenu. ctx is { entry.perk }."
+
+
+[[hook]]
+name = "ui.entry_acquired_guard"
+kind = "guard"
+doc  = "Fires at the top of entry_is_acquired(entry), in DragonShrineMenu. ctx is { entry.perk }."
 
 [[hook]]
 name = "ui.backplate_sprite"
@@ -3542,7 +3553,7 @@ marker  = "mmapi_ui_spawn_tutorial_guard"
 [[seam]]
 id      = "player_acquire_perk"
 file    = "gml/scripts/GameplaySystems/Player/Ari.gml"
-target  = { fn = "acquire_perk", at = "head" }
+target  = { fn = "acquire_perk", at = "after", anchor = '''self.perks_active[perk] = true;''' }
 op      = "emit"
 hook    = "player.acquire_perk"
 ctx     = "{ perk: perk }"
@@ -3755,3 +3766,23 @@ op      = "emit"
 hook    = "player.purchase_perk"
 ctx     = "{ perk: entry.perk }"
 marker  = "mmapi_dragonshrine_purchase_entry"
+
+[[seam]]
+id      = "ui_entry_is_enabled"
+file    = "gml/scripts/UI/Anchor/Menus/DragonshrineMenu.gml"
+target  = { fn = "entry_is_enabled", at = "head" }
+op      = "guard"
+hook    = "ui.entry_enabled_guard"
+ctx     = "{ perk: entry.perk }"
+on_veto = "return undefined;"
+marker  = "mmapi_entry_enabled_guard"
+
+[[seam]]
+id      = "ui_entry_is_acquired"
+file    = "gml/scripts/UI/Anchor/Menus/DragonshrineMenu.gml"
+target  = { fn = "entry_is_acquired", at = "head" }
+op      = "guard"
+hook    = "ui.entry_acquired_guard"
+ctx     = "{ perk: entry.perk }"
+on_veto = "return undefined;"
+marker  = "mmapi_entry_acquired_guard"
